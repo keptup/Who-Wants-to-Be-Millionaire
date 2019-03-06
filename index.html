@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Who wants to be a millionaire?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header><h2></h2></header>
+	<div class="main-container">
+		<div class="upper-container">
+			<button class="start">START</button>
+			<div class="game-status-container hidden"></div>
+		</div>
+		<div class="game-container hidden">
+			<div class="help-buttons">
+				<div class="next-question-container">
+					<button class="next-question">NEXT QUESTION</button>
+					<div class="timer">40</div>
+				</div>
+				<button class="second-guess-button">2nd Guess</button>
+				<button class="fifty-fifty">50 : 50</button>
+			</div>
+			<div class="question-container"></div>
+			<div class="answer-container">
+        <ol type="A" class="answers">
+        </ol>
+			</div>
+			<div class="points-container">0</div>
+		</div>
+	</div>
+	<audio id="lets-play" src="./sounds/lets_play.mp3"></audio>
+	<audio id="easy" src="./sounds/easy.mp3"></audio>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+</html>
