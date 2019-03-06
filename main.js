@@ -104,6 +104,7 @@ const correctAnswerFunc = () => {
   gameStatusContainer.textContent = 'CORRECT';
   points += 1;
   pointsContainer.textContent = points;
+
   console.log('Correct');
 };
 const nextQuestionFunc = () => {
