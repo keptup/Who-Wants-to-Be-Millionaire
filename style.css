@@ -9,3 +9,7 @@
 .answers {
 
 }
+
+li {
+  cursor: pointer;
+}
