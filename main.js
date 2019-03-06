@@ -177,7 +177,6 @@ answersContainer.addEventListener('click', (e) => {
     timesToGuess -= 1;
     if (!timesToGuess) {
       gameOver();
-      // gameOver();
     }
   }
 });
