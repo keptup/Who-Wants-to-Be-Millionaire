@@ -8,11 +8,12 @@ const nextQuestionBtn = document.querySelector('.next-question');
 const secondGuessBtn = document.querySelector('.second-guess-button');
 const fiftyFiftyBtn = document.querySelector('.fifty-fifty');
 const countDownClock = document.querySelector('.timer');
+const gameStatusContainer = document.querySelector('.game-status-container');
+const pointsContainer= document.querySelector('.points-container');
 // selecting audio files
 const letsPlayAudio = document.getElementById('lets-play');
 const easyAudio = document.getElementById('easy');
-const gameStatusContainer = document.querySelector('.game-status-container');
-const pointsContainer= document.querySelector('.points-container');
+const wrongAnswerAudio = document.getElementById('wrong-answer');
 
 // let gameState = false;
 let gameOn = false;
@@ -46,7 +47,7 @@ const randomQuestionGenerator = () => {
   } else {
     randomQuestionGenerator();
   };
-}
+};
 const fiftyFiftyGenerator = (num) => {
 	let randomFirst;
 	let randomSecond;
@@ -81,6 +82,8 @@ const stopTimerMusic = () => {
   letsPlayAudio.currentTime = 0;
   easyAudio.pause();
   easyAudio.currentTime = 0;
+  wrongAnswerAudio.pause();
+  wrongAnswerAudio.currentTime = 0;
 }
 const resetPoints = () => {
   points = 0;
@@ -90,10 +93,18 @@ const gameOver = () => {
   gameOn = false;
   // stoping audio
   stopTimerMusic();
+  wrongAnswerAudio.play();
   gameContainer.classList.add('hidden');
   gameStatusContainer.classList.remove('hidden');
   gameStatusContainer.textContent = `GAME OVER.\nYou earner ${points}`;
   startBtn.textContent = 'START';
+};
+const correctAnswerFunc = () => {
+  gameStatusContainer.classList.remove('hidden');
+  gameStatusContainer.textContent = 'CORRECT';
+  points += 1;
+  pointsContainer.textContent = points;
+  console.log('Correct');
 };
 const nextQuestionFunc = () => {
   nextQuestionBtn.classList.add('hidden');
@@ -168,10 +179,7 @@ fiftyFiftyBtn.addEventListener('click', () => {
 answersContainer.addEventListener('click', (e) => {
   if (e.target.id == correctAnswer) {
     e.target.classList.add('hidden');
-    gameStatusContainer.textContent = 'CORRECT';
-    points += 1;
-    pointsContainer.textContent = points;
-    console.log('Correct');
+    correctAnswerFunc();
   } else {
     e.target.classList.add('hidden');
     timesToGuess -= 1;
