@@ -14,12 +14,12 @@
 			<button class="start">START</button>
 			<div class="game-status-container hidden"></div>
 		</div>
+		<div class="next-question-container hidden">
+			<button class="next-question">NEXT QUESTION</button>
+		</div>
 		<div class="game-container hidden">
 			<div class="help-buttons">
-				<div class="next-question-container">
-					<button class="next-question">NEXT QUESTION</button>
-					<div class="timer">40</div>
-				</div>
+				<div class="timer">40</div>
 				<button class="second-guess-button">2nd Guess</button>
 				<button class="fifty-fifty">50 : 50</button>
 			</div>
@@ -28,12 +28,13 @@
         <ol type="A" class="answers">
         </ol>
 			</div>
-			<div class="points-container">0</div>
 		</div>
+		<div class="points-container hidden">0</div>
 	</div>
 	<audio id="lets-play" src="./sounds/lets_play.mp3"></audio>
 	<audio id="easy" src="./sounds/easy.mp3"></audio>
 	<audio id="wrong-answer" src="./sounds/wrong_answer.mp3"></audio>
+	<audio id="correct-answer" src="./sounds/correct_answer.mp3"></audio>
   <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
