@@ -77,8 +77,10 @@ const startTimerMusic = () => {
   timer();
   // start audio
   letsPlayAudio.play();
+  letsPlayAudio.volume = 0.3;
   timeoutId = setTimeout(() => {
     easyAudio.play();
+    easyAudio.volume = 0.3;
   }, 4000);
 };
 const stopTimerMusic = () => {
@@ -102,6 +104,7 @@ const gameOver = () => {
   // stopping audio
   stopTimerMusic();
   wrongAnswerAudio.play();
+  wrongAnswerAudio.volume = 0.3;
   gameContainer.classList.add("hidden");
   gameStatusContainer.classList.remove("hidden");
   gameStatusContainer.textContent = points === 1 ? `Game over. You earned ${points} point.` : `Game over. You earned ${points} points.`;
@@ -113,6 +116,7 @@ const correctAnswerFunc = () => {
   if (points < 12) {
     stopTimerMusic();
     correctAnswerAudio.play();
+    correctAnswerAudio.volume = 0.3;
     nextQuestionContainer.classList.remove("hidden");
     gameStatusContainer.classList.remove("hidden");
     gameContainer.classList.add("hidden");
@@ -121,6 +125,7 @@ const correctAnswerFunc = () => {
   } else {
     stopTimerMusic();
     correctAnswerAudio.play();
+    correctAnswerAudio.volume = 0.3;
     gameStatusContainer.classList.remove("hidden");
     gameContainer.classList.add("hidden");
     gameStatusContainer.textContent =
