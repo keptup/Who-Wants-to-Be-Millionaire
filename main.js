@@ -1,21 +1,22 @@
 // Variable declarations
-const URL = 'https://raw.githubusercontent.com/aaronnech/Who-Wants-to-Be-a-Millionaire/master/questions.json';
-const gameContainer = document.querySelector('.game-container');
-const startBtn = document.querySelector('.start');
-const questionContainer = document.querySelector('.question-container');
-const answersContainer = document.querySelector('.answers');
-const nextQuestionBtn = document.querySelector('.next-question');
-const secondGuessBtn = document.querySelector('.second-guess-button');
-const fiftyFiftyBtn = document.querySelector('.fifty-fifty');
-const countDownClock = document.querySelector('.timer');
-const gameStatusContainer = document.querySelector('.game-status-container');
-const nextQuestionContainer = document.querySelector('.next-question-container');
-const pointsContainer= document.querySelector('.points-container');
+const URL =
+  "https://raw.githubusercontent.com/aaronnech/Who-Wants-to-Be-a-Millionaire/master/questions.json";
+const gameContainer = document.querySelector(".game-container");
+const startBtn = document.querySelector(".start");
+const questionContainer = document.querySelector(".question-container");
+const answersContainer = document.querySelector(".answers");
+const nextQuestionBtn = document.querySelector(".next-question");
+const secondGuessBtn = document.querySelector(".second-guess-button");
+const fiftyFiftyBtn = document.querySelector(".fifty-fifty");
+const countDownClock = document.querySelector(".timer");
+const gameStatusContainer = document.querySelector(".game-status-container");
+const nextQuestionContainer = document.querySelector(".next-question-container");
+const pointsContainer = document.querySelector(".points-container");
 // selecting audio files
-const letsPlayAudio = document.getElementById('lets-play');
-const easyAudio = document.getElementById('easy');
-const wrongAnswerAudio = document.getElementById('wrong-answer');
-const correctAnswerAudio = document.getElementById('correct-answer');
+const letsPlayAudio = document.getElementById("lets-play");
+const easyAudio = document.getElementById("easy");
+const wrongAnswerAudio = document.getElementById("wrong-answer");
+const correctAnswerAudio = document.getElementById("correct-answer");
 
 // let gameState = false;
 let gameOn = false;
@@ -35,43 +36,45 @@ let intervalId;
 let points = 0;
 
 // Functions
+const randomNumHelperFunc = (num) => Math.floor(Math.random() * num);
 const dataLoad = async () => {
   data = await fetch(URL).then(res => res.json());
 };
 const randomQuestionGenerator = () => {
-  randomGameNum = Math.floor(Math.random() * 4);
-  randomQuestionNum = Math.floor(Math.random() * 15);
+  randomGameNum = randomNumHelperFunc(4);
+  randomQuestionNum = randomNumHelperFunc(15);
 
-  if (questionsAsked.findIndex(item => item[randomGameNum] === randomQuestionNum) === -1) {
+  if (
+    questionsAsked.findIndex(
+      item => item[randomGameNum] === randomQuestionNum
+    ) === -1
+  ) {
     currentQuestion[randomGameNum] = randomQuestionNum;
     questionsAsked.push(currentQuestion);
     currentQuestion = {};
   } else {
     randomQuestionGenerator();
-  };
+  }
 };
-const fiftyFiftyGenerator = (num) => {
-	let randomFirst;
-	let randomSecond;
-	// Generate first random number
-	randomFirst = Math.floor(Math.random() * 4);
-	while (randomFirst === num) {
-		randomFirst = Math.floor(Math.random() * 4);
-	}
+const fiftyFiftyGenerator = num => {
+  let randomFirst;
+  let randomSecond;
+  // Generate first random number
+  randomFirst = randomNumHelperFunc(4);
+  while (randomFirst === num) {
+    randomFirst = randomNumHelperFunc(4);
+  }
 
-	randomSecond = Math.floor(Math.random() * 4);
-	while (randomSecond === randomFirst || randomSecond === num) {
-		randomSecond = Math.floor(Math.random() * 4);
-	}
-	// hide two wrong answers
-	document.querySelector(`[id='${randomFirst}']`).style.visibility = 'hidden';
-	document.querySelector(`[id='${randomSecond}']`).style.visibility = 'hidden';
+  randomSecond = randomNumHelperFunc(4);
+  while (randomSecond === randomFirst || randomSecond === num) {
+    randomSecond = randomNumHelperFunc(4);
+  }
+  // hide two wrong answers
+  document.querySelector(`[id='${randomFirst}']`).style.visibility = "hidden";
+  document.querySelector(`[id='${randomSecond}']`).style.visibility = "hidden";
 };
 const startTimerMusic = () => {
   timer();
-  // setTimeout(() => {
-  //   timer();
-  // }, 4000);
   // start audio
   letsPlayAudio.play();
   timeoutId = setTimeout(() => {
@@ -99,61 +102,66 @@ const gameOver = () => {
   // stopping audio
   stopTimerMusic();
   wrongAnswerAudio.play();
-  gameContainer.classList.add('hidden');
-  gameStatusContainer.classList.remove('hidden');
-  gameStatusContainer.textContent = `Game over. You earner ${points} points`;
-  startBtn.textContent = 'START';
-  pointsContainer.classList.add('hidden');
+  gameContainer.classList.add("hidden");
+  gameStatusContainer.classList.remove("hidden");
+  gameStatusContainer.textContent = points === 1 ? `Game over. You earned ${points} point.` : `Game over. You earned ${points} points.`;
+  startBtn.textContent = "START";
+  pointsContainer.classList.add("hidden");
 };
 const correctAnswerFunc = () => {
   points += 1;
   if (points < 12) {
     stopTimerMusic();
     correctAnswerAudio.play();
-    nextQuestionContainer.classList.remove('hidden');
-    gameStatusContainer.classList.remove('hidden');
-    gameContainer.classList.add('hidden');
-    gameStatusContainer.textContent = 'CORRECT';
+    nextQuestionContainer.classList.remove("hidden");
+    gameStatusContainer.classList.remove("hidden");
+    gameContainer.classList.add("hidden");
+    gameStatusContainer.textContent = "CORRECT";
     pointsContainer.textContent = `${points} / 12`;
   } else {
     stopTimerMusic();
     correctAnswerAudio.play();
-    gameStatusContainer.classList.remove('hidden');
-    gameContainer.classList.add('hidden');
-    gameStatusContainer.textContent = 'CONGRATULATIONS! You\'ve become a Millionaire!';
+    gameStatusContainer.classList.remove("hidden");
+    gameContainer.classList.add("hidden");
+    gameStatusContainer.textContent =
+      "CONGRATULATIONS! You've become a Millionaire!";
     pointsContainer.textContent = `${points} / 12`;
   }
 };
 const nextQuestionFunc = () => {
-  nextQuestionContainer.classList.add('hidden');
+  nextQuestionContainer.classList.add("hidden");
   stopTimerMusic();
   gameOn = true;
-  gameContainer.classList.remove('hidden');
-  gameStatusContainer.classList.add('hidden');
-  startBtn.textContent = 'QUIT';
+  gameContainer.classList.remove("hidden");
+  gameStatusContainer.classList.add("hidden");
+  startBtn.textContent = "QUIT";
   timesToGuess = 1;
-  
-  let answers = '';
+
+  let answers = "";
   randomQuestionGenerator();
   startTimerMusic();
 
-  correctAnswer = '';
-  correctAnswer = data['games'][randomGameNum]['questions'][randomQuestionNum]['correct'];
-  questionList = data['games'][randomGameNum]['questions'][randomQuestionNum]['content'];
+  correctAnswer = "";
+  correctAnswer =
+    data["games"][randomGameNum]["questions"][randomQuestionNum]["correct"];
+  questionList =
+    data["games"][randomGameNum]["questions"][randomQuestionNum]["content"];
 
   questionList.forEach((item, index) => {
     answers += `<li id="${index}">${item}</li>`;
   });
 
-  questionContainer.textContent = data['games'][randomGameNum]['questions'][randomQuestionNum]['question'];
+  questionContainer.textContent =
+    data["games"][randomGameNum]["questions"][randomQuestionNum]["question"];
   answersContainer.innerHTML = answers;
 };
 const timer = () => {
   currentTime = new Date().getTime();
   intervalId = setInterval(() => {
-    let interval = Math.floor(((40000 + currentTime) - new Date().getTime()) / 1000);
+    let interval = Math.floor(
+      (40000 + currentTime - new Date().getTime()) / 1000
+    );
     countDownClock.textContent = interval;
-    console.log(interval);
     if (interval === 0) {
       gameState = false;
       clearInterval(intervalId);
@@ -165,40 +173,42 @@ const timer = () => {
 };
 
 // Event Listeners
-window.addEventListener('load', async () => {
+window.addEventListener("load", async () => {
   await dataLoad();
 });
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener("click", () => {
   if (!gameOn) {
     stopTimerMusic();
     resetPoints();
+    secondGuessBtn.classList.remove("hidden");
+    fiftyFiftyBtn.classList.remove("hidden");
     nextQuestionFunc();
-    pointsContainer.classList.remove('hidden');
+    pointsContainer.classList.remove("hidden");
   } else {
     resetPoints();
     stopTimerMusic();
     gameOver();
   }
 });
-nextQuestionBtn.addEventListener('click', () => nextQuestionFunc());
-secondGuessBtn.addEventListener('click', () => {
-	// change let timesToGuess to 2
-	timesToGuess = 2;
-	// hide the x2 button
-	secondGuessBtn.classList.add('hidden');
+nextQuestionBtn.addEventListener("click", () => nextQuestionFunc());
+secondGuessBtn.addEventListener("click", () => {
+  // change let timesToGuess to 2
+  timesToGuess = 2;
+  // hide the x2 button
+  secondGuessBtn.classList.add("hidden");
 });
-fiftyFiftyBtn.addEventListener('click', () => {
-	// Remove two wrong answers
-	fiftyFiftyGenerator(correctAnswer);
-	// hide the 50:50 button
-	fiftyFiftyBtn.classList.add('hidden');
+fiftyFiftyBtn.addEventListener("click", () => {
+  // Remove two wrong answers
+  fiftyFiftyGenerator(correctAnswer);
+  // hide the 50:50 button
+  fiftyFiftyBtn.classList.add("hidden");
 });
-answersContainer.addEventListener('click', (e) => {
+answersContainer.addEventListener("click", e => {
   if (e.target.id == correctAnswer) {
-    e.target.classList.add('hidden');
+    e.target.classList.add("hidden");
     correctAnswerFunc();
   } else {
-    e.target.classList.add('hidden');
+    e.target.classList.add("hidden");
     timesToGuess -= 1;
     if (timesToGuess <= 0) {
       stopTimerMusic();
