@@ -44,11 +44,7 @@ const randomQuestionGenerator = () => {
   randomGameNum = randomNumHelperFunc(4);
   randomQuestionNum = randomNumHelperFunc(15);
 
-  if (
-    questionsAsked.findIndex(
-      item => item[randomGameNum] === randomQuestionNum
-    ) === -1
-  ) {
+  if (questionsAsked.findIndex(item => item[randomGameNum] === randomQuestionNum) === -1) {
     currentQuestion[randomGameNum] = randomQuestionNum;
     questionsAsked.push(currentQuestion);
     currentQuestion = {};
