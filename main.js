@@ -163,7 +163,7 @@ const nextQuestionFunc = () => {
 const timer = () => {
   currentTime = new Date().getTime();
   intervalId = setInterval(() => {
-    let interval = Math.floor(
+    const interval = Math.floor(
       (40000 + currentTime - new Date().getTime()) / 1000
     );
     countDownClock.textContent = interval;
